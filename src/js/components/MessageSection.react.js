@@ -46,7 +46,6 @@ class MessageSection extends React.Component {
   };
 
   render() {
-    console.log(this.state.messages);
     let messageListItems = this.state.messages.map(getMessageListItem);
 
     return (

@@ -2,6 +2,7 @@
  * Created by lamtn on 2/8/16.
  */
 import React from 'react';
+import { Input } from 'react-bootstrap';
 import ChatMessageActionCreators from '../actions/ChatMessageActionCreators';
 
 const ENTER_KEY_CODE = 13;
@@ -24,13 +25,14 @@ class MessageComposer extends React.Component {
 
   render() {
     return (
-      <textarea
-        className='message-composer'
+      <Input
+        type="textarea"
+        className="message-composer"
+        placeholder="Write a reply..."
         name='message'
         value={this.state.text}
         onChange={this._onChange}
-        onKeyDown={this._onKeyDown}
-      />
+        onKeyDown={this._onKeyDown}/>
     )
   };
 

@@ -43,7 +43,6 @@ class ThreadSection extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     let threadListItems = this.state.threads.map(thread => {
       return (
         <ThreadListItem
@@ -53,10 +52,9 @@ class ThreadSection extends React.Component {
         />
       );
     }, this);
-    let unread =
-      this.state.unreadCount === 0 ?
+    let unread = this.state.unreadCount === 0 ?
         null :
-        <span>Unread threads: {this.state.unreadCount}</span>;
+        <span>Recent ({this.state.unreadCount})</span>;
 
     return (
       <div className='thread-section'>

@@ -92,7 +92,6 @@ MessageStore.dispatchToken = ChatAppDispatcher.register(action => {
 
     case ActionTypes.RECEIVE_RAW_MESSAGES:
       _addMessages(action.rawMessages);
-      console.log(_messages);
       ChatAppDispatcher.waitFor([ThreadStore.dispatchToken]);
       _markAllInThreadRead(ThreadStore.getCurrentID());
       break;

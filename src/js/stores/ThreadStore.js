@@ -30,7 +30,6 @@ let ThreadStore = Object.assign({}, EventEmitter.prototype, {
 
     if (!_currentID) {
       let allChrono = this.getAllChrono();
-      console.log(allChrono);
       _currentID = allChrono[allChrono.length - 1].id;
     }
 
@@ -64,7 +63,7 @@ let ThreadStore = Object.assign({}, EventEmitter.prototype, {
       orderedThreads.push(thread);
     }
     return orderedThreads.sort((t1, t2) => {
-      return t1.lastMessage.date - t2.lastMessage.date;
+      return t2.lastMessage.date - t1.lastMessage.date;
     });
   },
 
@@ -88,6 +87,13 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(action => {
 
     case ActionTypes.RECEIVE_RAW_MESSAGES:
       ThreadStore.init(action.rawMessages);
+      ThreadStore.emitChange();
+      break;
+
+    // update lastMessage for ThreadListItem component when a message is created
+    case ActionTypes.CREATE_MESSAGE:
+      _threads[_currentID].lastMessage =
+        ChatMessageUtils.getCreatedMessageData(action.text, action.currentThreadID);
       ThreadStore.emitChange();
       break;
   }

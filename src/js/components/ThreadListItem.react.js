@@ -3,18 +3,25 @@
  */
 import ChatThreadActionCreators from '../actions/ChatThreadActionCreators';
 import React from 'react';
+import { Router, Route, Link } from 'react-router';
 import classNames from 'classnames';
 
 const PropTypes = React.PropTypes;
 
 class ThreadListItem extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this._onClick = this._onClick.bind(this);
+  }
+
   static propTypes = {
     thread: PropTypes.object,
     currentThreadID: PropTypes.string
   };
 
   render() {
-    console.log(this.props);
 
     // get thread and last message from props
     let thread = this.props.thread;
@@ -26,18 +33,18 @@ class ThreadListItem extends React.Component {
       'active': thread.id === this.props.currentThreadID
     });
 
-    console.log(thread.name);
     return (
-      <li className={className} onClick={this._onClick.bind(this)}>
-        <h5 className='thread-name'>{thread.name}</h5>
-        <div className='thread-time'>{lastMessage.date.toLocaleTimeString()}</div>
-        <div className='thread-last-message'>{lastMessage.text}</div>
-      </li>
+      //<Link to={`/threads/${thread.id}`}>
+        <li className={className} onClick={this._onClick}>
+          <h5 className='thread-name'>{thread.name}</h5>
+          <div className='thread-time'>{lastMessage.date.toLocaleTimeString()}</div>
+          <div className='thread-last-message'>{lastMessage.text}</div>
+        </li>
+      //</Link>
     )
   };
 
   _onClick() {
-    console.log(this.props);
     ChatThreadActionCreators.clickThread(this.props.thread.id);
   }
 }
