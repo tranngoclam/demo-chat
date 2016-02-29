@@ -4,6 +4,7 @@
 import ChatAppDispatcher from '../dispatcher/ChatAppDispatcher';
 import ChatConstants from '../constants/ChatConstants';
 import ChatMessageUtils from '../utils/ChatMessageUtils';
+import UnreadThreadStore from '../stores/UnreadThreadStore';
 import { EventEmitter } from 'events';
 
 const ActionTypes = ChatConstants.ActionTypes;
@@ -18,14 +19,16 @@ let ThreadStore = Object.assign({}, EventEmitter.prototype, {
     rawMessages.forEach(message => {
       let threadID = message.threadID;
       let thread = _threads[threadID];
+
       if (thread && thread.lastMessage.timestamp > message.timestamp) {
         return;
       }
+
       _threads[threadID] = {
         id: threadID,
         name: message.threadName,
         lastMessage: ChatMessageUtils.convertRawMessage(message, _currentID)
-      }
+      };
     }, this);
 
     if (!_currentID) {
@@ -87,6 +90,7 @@ ThreadStore.dispatchToken = ChatAppDispatcher.register(action => {
 
     case ActionTypes.RECEIVE_RAW_MESSAGES:
       ThreadStore.init(action.rawMessages);
+      console.log(_threads);
       ThreadStore.emitChange();
       break;
 

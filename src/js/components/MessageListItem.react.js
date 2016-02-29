@@ -2,6 +2,7 @@
  * Created by lamtn on 2/8/16.
  */
 import React from 'react';
+import moment from 'moment';
 
 const PropTypes = React.PropTypes;
 
